@@ -1,2 +1,2 @@
 # cpp
-My C++ Tests
+my c++ tests and notes
