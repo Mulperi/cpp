@@ -6,6 +6,7 @@ using namespace std;
 
 // & is the address-of operator, and can be read simply as "address of"
 // * is the dereference operator, and can be read as "value pointed to by"
+// Pointer = Variable that's value is an address of another variable
 
 void getValues()
 {
