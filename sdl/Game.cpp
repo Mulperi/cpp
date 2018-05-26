@@ -2,7 +2,7 @@
 
 Game::Game()
 {
-    this->init("Basic Game", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, true);
+    this->init("Basic Game", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 300, 300, false);
 }
 Game::~Game(){};
 
@@ -29,7 +29,6 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
         renderer = SDL_CreateRenderer(window, -1, 0);
         if (renderer)
         {
-            SDL_SetRenderDrawColor(renderer, 255, 255, 255, 1);
             std::cout << "renderer created" << std::endl;
         }
         
@@ -60,11 +59,15 @@ void Game::update()
 {
     count++; // Just to test gameloop
     std::cout << count << std::endl;
+    
 };
 
 void Game::render()
 {
+    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 1);
     SDL_RenderClear(renderer);
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+    SDL_RenderDrawLine(renderer, 50, 50, 100, 100);
     SDL_RenderPresent(renderer);
 };
 
