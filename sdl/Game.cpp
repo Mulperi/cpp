@@ -1,80 +1,61 @@
 #include "Game.hpp"
+#include "Player.hpp"
+
+Player p1(50, 50, 50);
 
 Game::Game()
 {
-    this->init("Basic Game", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 300, 300, false);
+    this->init("Basic Game", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 360, false);
 }
-Game::~Game(){};
 
-void Game::init(const char *title, int xpos, int ypos, int width, int height, bool fullscreen)
+void Game::render()
 {
-    
-    int flags = 0;
-    if (fullscreen)
-    {
-        flags = SDL_WINDOW_FULLSCREEN;
-    }
-    
-    // SDL INIT -> GAME RUNNING
-    if (SDL_Init(SDL_INIT_EVERYTHING) == 0)
-    {
-        std::cout << "subsystems initialized" << std::endl;
-        
-        window = SDL_CreateWindow(title, xpos, ypos, width, height, flags);
-        if (window)
-        {
-            std::cout << "window created" << std::endl;
-        }
-        
-        renderer = SDL_CreateRenderer(window, -1, 0);
-        if (renderer)
-        {
-            std::cout << "renderer created" << std::endl;
-        }
-        
-        isRunning = true;
-    }
-    else
-    {
-        isRunning = false;
-    }
-};
-
-void Game::handleEvents()
-{
-    SDL_Event event;
-    SDL_PollEvent(&event);
-    
-    switch (event.type)
-    {
-        case SDL_QUIT: // Clicking window close
-            isRunning = false;
-            break;
-        default:
-            break;
-    }
+    SDL_SetRenderDrawColor(renderer, 200, 200, 200, 0.1);
+    SDL_RenderClear(renderer); // Clear screen with the color above
+    p1.draw(renderer);
+    SDL_RenderPresent(renderer);
 };
 
 void Game::update()
 {
-    count++; // Just to test gameloop
-    std::cout << count << std::endl;
+    SDL_Event event;
+    SDL_PollEvent(&event);
     
+    p1.update(event);
+    
+    switch (event.type)
+    {
+        case SDL_QUIT: // Click window close
+            running = false;
+            break;
+    }
 };
 
-void Game::render()
-{
-    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 1);
-    SDL_RenderClear(renderer);
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-    SDL_RenderDrawLine(renderer, 50, 50, 100, 100);
-    SDL_RenderPresent(renderer);
-};
-
+Game::~Game(){};
 void Game::clean()
 {
     SDL_DestroyWindow(window);
     SDL_DestroyRenderer(renderer);
     SDL_Quit();
-    std::cout << "game cleaned" << std::endl;
+};
+
+void Game::init(const char *title, int xpos, int ypos, int width, int height, bool fullscreen)
+{
+    
+    int flags = 0;
+        if (fullscreen)
+        {
+            flags = SDL_WINDOW_FULLSCREEN;
+        }
+    
+    if (SDL_Init(SDL_INIT_EVERYTHING) == 0)
+    {
+        window = SDL_CreateWindow(title, xpos, ypos, width, height, flags);
+        renderer = SDL_CreateRenderer(window, -1, 0);
+        running = true;
+    }
+    else
+    {
+        running = false;
+    }
 };

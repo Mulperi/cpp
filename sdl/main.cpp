@@ -1,22 +1,15 @@
-// Coded with Let's Make Games -tutorial on Youtube
-// By Mulperi
-
 #include "Game.hpp"
 
-Game *game = nullptr;
+Game *game = nullptr; // Not sure what the hell is happening here
 
 int main(int argc, const char *argv[])
 {
-    
     game = new Game();
-    
-    while (game->running())
+    while (game->running)
     {
-        game->handleEvents();
         game->update();
         game->render();
     }
-    
     game->clean();
     
     return 0;
