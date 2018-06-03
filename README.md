@@ -1,3 +1,2 @@
 # cpp
-my c++ tests and notes
-# JavaScript
+my c++ tests and notest
